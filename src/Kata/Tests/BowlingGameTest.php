@@ -32,6 +32,14 @@ class BowlingGameTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(16, $this->game->score());
     }
 
+    public function testOneStrike(){
+        $this->rollStrike();
+        $this->game->roll(3);
+        $this->game->roll(4);
+        $this->rollMany(16, 0);
+        $this->assertEquals(24, $this->game->score());
+    }
+
     private function rollMany($n, $pins){
         for($i = 0; $i < $n; $i++){
             $this->game->roll($pins);
@@ -41,5 +49,9 @@ class BowlingGameTest extends \PHPUnit_Framework_TestCase
     private function rollSpare(){
         $this->game->roll(5);
         $this->game->roll(5);
+    }
+
+    private function rollStrike(){
+        $this->game->roll(10);
     }
 }
