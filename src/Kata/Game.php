@@ -7,13 +7,29 @@ namespace Kata;
  */
 class Game
 {
-    private $score = 0;
+    private $rolls = array();
+    private $currentRoll = 0;
 
     public function roll($pins){
-        $this->score += $pins;
+        $this->rolls[$this->currentRoll++] = $pins;
     }
 
     public function score(){
-        return $this->score;
+        $score = 0;
+        $frameIndex = 0;
+        for($frame = 0; $frame < 10; $frame++){
+            if($this->isSpare($frameIndex)){
+                $score += $this->rolls[$frameIndex+2] + 10;
+                $frameIndex += 2;
+            }else{
+                $score += $this->rolls[$frameIndex] + $this->rolls[$frameIndex+1];
+                $frameIndex += 2;
+            }
+        }
+        return $score;
+    }
+
+    private function isSpare($frameIndex){
+        return ($this->rolls[$frameIndex] + $this->rolls[$frameIndex+1] == 10)? true : false;
     }
 }
