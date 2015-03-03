@@ -40,6 +40,11 @@ class BowlingGameTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(24, $this->game->score());
     }
 
+    public function testPerfectGame(){
+        $this->rollMany(12, 10);
+        $this->assertEquals(300, $this->game->score());
+    }
+
     private function rollMany($n, $pins){
         for($i = 0; $i < $n; $i++){
             $this->game->roll($pins);
